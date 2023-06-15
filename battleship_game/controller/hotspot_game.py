@@ -1,4 +1,4 @@
-from battleship_game.controller.game import Game
+from controller.game import Game
 
 
 class HotSpotGame(Game):

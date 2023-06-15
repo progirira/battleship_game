@@ -1,6 +1,3 @@
-from battleship_game.model.move import Move
-
-
 class ShipFactory(object):
     def __init__(self):
         self.ships_1decks = 4

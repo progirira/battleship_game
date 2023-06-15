@@ -1,8 +1,8 @@
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QGridLayout, QLayout
 
-from battleship_game.model.move import Move
-from battleship_game.model.position import Position
+from model.move import Move
+from model.position import Position
 
 
 class Field:

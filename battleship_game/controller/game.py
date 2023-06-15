@@ -2,7 +2,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPalette, QPixmap, QBrush
 from PyQt5.QtWidgets import QVBoxLayout, QWidget, QHBoxLayout
 
-from battleship_game.model.field import Field
+from model.field import Field
 
 
 class Game:
