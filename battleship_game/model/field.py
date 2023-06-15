@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QGridLayout, QLayout
 
 from model.move import Move
 from model.position import Position
+from model.shipfactory import ShipFactory
 
 
 class Field:
@@ -15,7 +16,9 @@ class Field:
         self.positions.setSizeConstraint(QLayout.SetFixedSize)
         self.dim = dim
         self.init_board()
-        self.wrong_move = True
+        # self.wrong_move = True
+        # self.ships_factory = ShipFactory()
+        # self.ships_factory = None
 
     def init_board(self):
         # Add positions to the map
@@ -29,6 +32,10 @@ class Field:
         for x in range(0, self.dim):
             for y in range(0, self.dim):
                 w = self.positions.itemAtPosition(x, y).widget()
+                print("HERE")
+                if w.if_checking_mode:
+                    w.is_checked = True
+                    break
                 if w.is_move and not w.is_checked:
                     if w.is_ship or w.is_anchor:
                         self.move.if_correct = False
@@ -64,7 +71,64 @@ class Field:
                 w.is_checked = False
                 w.update()
 
+
+    def show_anchors(self):
+        if self.move.rotation == 'h':
+            x_move = self.move.row
+            y_move = self.move.column + self.move.number_of_decks - 1
+        else:
+            x_move = self.move.row + self.move.number_of_decks - 1
+            y_move = self.move.column
+        for x in range(self.move.row, x_move):
+            for y in range(self.move.column, y_move):
+                w = self.positions.itemAtPosition(y, x).widget()
+                # if w.is_checked
+
+    def if_unchecked_ships_around(self, w):
+        for x in range(w.x - 1, w.x + 1):
+            for y in range(w.y - 1, w.y + 1):
+                if 0 <= x <= 9 and 0 <= y <= 9:
+                    w = self.positions.itemAtPosition(x, y).widget()
+                    if w.is_ship and not w.is_checked:
+                        return False
+        return True
+
+    def find_ship(self, w):
+        for x in range(w.x - 1, w.x + 1):
+            for y in range(w.y - 1, w.y + 1):
+                if 0 <= x <= 9 and 0 <= y <= 9:
+                    w = self.positions.itemAtPosition(x, y).widget()
+                    if w.is_ship:
+                        return w
+        return w
+
+
     def put_anchors(self):
+
+        # w = self.positions.itemAtPosition(0, 0).widget()
+        # if w.if_checking_mode:
+        #     for x in range(0, self.dim):
+        #         for y in range(0, self.dim):
+        #             w = self.positions.itemAtPosition(x, y).widget()
+        #             # f = self.if_checked_ships_around()
+        #             # new_w = self.find_ship(w)
+        #             for _ in range(9):
+        #                 if self.if_unchecked_ships_around(w):
+        #                     break
+        #
+        #                 w = self.find_ship(w)
+        #                 if self.if_unchecked_ships_around(w):
+        #                     break
+        #
+        #
+        #                 if not self.if_unchecked_ships_around(w) and w.x == \
+        #                         new_w.x and w.y == new_w.y:
+        #                 new_w = self.find_ship(w)
+        #                 if w.x == new_w.x and w.y == new_w.y:
+        #                     break
+
+
+
         row = self.move.row
         col = self.move.column
         rotation = self.move.rotation
@@ -83,6 +147,12 @@ class Field:
                     w = self.positions.itemAtPosition(y, x).widget()
                     if not w.is_ship:
                         w.is_anchor = True
+
+    def set_checking_mode(self):
+        for x in range(0, self.dim):
+            for y in range(0, self.dim):
+                w = self.positions.itemAtPosition(x, y).widget()
+                w.if_checking_mode = True
 
     #
     # def generate_random_field(self):

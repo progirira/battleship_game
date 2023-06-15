@@ -1,9 +1,13 @@
 class ShipFactory(object):
     def __init__(self):
+        self.amount = 8
         self.ships_1decks = 4
         self.ships_2decks = 3
         self.ships_3decks = 2
         self.ships_4decks = 1
+
+    def decrease_amount(self):
+        self.amount -= 1
 
     def return_num_of_ships(self):
         return self.ships_1decks + self.ships_2decks + self.ships_3decks \
