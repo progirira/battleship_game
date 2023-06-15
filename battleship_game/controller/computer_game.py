@@ -1,9 +1,9 @@
 from PyQt5.QtCore import pyqtSignal, Qt
 from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QWidget
 
-from controller.game import Game
-from model.shipfactory import ShipFactory
-from view.elements_setter import ElementsSetter
+from battleship_game.controller.game import Game
+from battleship_game.model.shipfactory import ShipFactory
+from battleship_game.view.elements_setter import ElementsSetter
 
 
 class ComputerGame(Game):

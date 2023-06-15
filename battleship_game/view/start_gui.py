@@ -5,10 +5,10 @@ from PyQt5.QtGui import QImage, QIcon, QPalette, QBrush, QPixmap
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, \
     QLabel
 
-from controller.computer_game import ComputerGame
-from controller.game import Game
-from controller.hotspot_game import HotSpotGame
-from view.elements_setter import ElementsSetter
+from battleship_game.controller.computer_game import ComputerGame
+from battleship_game.controller.game import Game
+from battleship_game.controller.hotspot_game import HotSpotGame
+from battleship_game.view.elements_setter import ElementsSetter
 
 
 IMG_BOMB = QImage("images/bomb.png")

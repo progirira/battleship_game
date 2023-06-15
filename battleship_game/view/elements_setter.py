@@ -1,7 +1,7 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QLabel, QPushButton, QComboBox, QCheckBox
 
-from view.in_and_out import In_and_out
+from battleship_game.view.in_and_out import In_and_out
 
 
 class ElementsSetter:
