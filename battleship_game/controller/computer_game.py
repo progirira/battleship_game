@@ -19,7 +19,6 @@ class ComputerGame(Game):
         self.ships_factory = ShipFactory()
         self.start()
 
-
     def start(self):
         self.init_fields()
         ships = self.ships_factory.return_num_of_ships()
@@ -35,12 +34,12 @@ class ComputerGame(Game):
                                               have_to_format=True))
         hb = QHBoxLayout()
         extra_vb = QVBoxLayout()
-        extra_vb.addWidget(self.elems_setter.button('random put',
-                                                    self.set))
+        # extra_vb.addWidget(self.elems_setter.button('random put',
+        #                    self.random_set))
         extra_vb.addWidget(self.elems_setter.button('put',
                                                     self.set))
         extra_vb.addWidget(self.elems_setter.button('clear',
-                                                    self.player2_field.clear_move))
+                           self.player2_field.clear_move))
         hb.addLayout(extra_vb)
         hb.addLayout(self.return_player2_field())
         hb.setAlignment(Qt.AlignHCenter)
@@ -51,9 +50,15 @@ class ComputerGame(Game):
         self.main_window.setCentralWidget(w)
         self.main_window.show()
 
+    def random_set(self):
+        while self.ships_factory.amount != 0:
+            self.player2_field.generate_random_set()
+            self.set()
+
     def set(self):
         self.player2_field.set()
         self.ships_factory.decrease_amount()
+        print(self.ships_factory.amount)
         if self.ships_factory.amount == 0:
             self.player2_field.set_checking_mode()
             self.start_playing()
@@ -66,7 +71,7 @@ class ComputerGame(Game):
         hb = QHBoxLayout()
         extra_vb = QVBoxLayout()
         hb.addLayout(extra_vb)
-        hb.addLayout(self.return_player2_field())
+        # hb.addLayout(self.return_player2_field())
         hb.addLayout(self.return_player1_field())
         hb.setAlignment(Qt.AlignHCenter)
         vb.addLayout(hb)
@@ -75,13 +80,4 @@ class ComputerGame(Game):
         w.setLayout(vb)
         self.main_window.setCentralWidget(w)
         self.main_window.show()
-
-
-
-
-
-
-
-
-
 

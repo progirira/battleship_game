@@ -1,3 +1,6 @@
+import time
+from random import randint
+
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtWidgets import QGridLayout, QLayout
 
@@ -29,10 +32,11 @@ class Field:
                 w.clicked.connect(self.if_clicked)
 
     def if_clicked(self):
+        print("CLICKED")
         for x in range(0, self.dim):
             for y in range(0, self.dim):
                 w = self.positions.itemAtPosition(x, y).widget()
-                print("HERE")
+                # print("HERE")
                 if w.if_checking_mode:
                     w.is_checked = True
                     break
@@ -71,7 +75,6 @@ class Field:
                 w.is_checked = False
                 w.update()
 
-
     def show_anchors(self):
         if self.move.rotation == 'h':
             x_move = self.move.row
@@ -102,7 +105,6 @@ class Field:
                         return w
         return w
 
-
     def put_anchors(self):
 
         # w = self.positions.itemAtPosition(0, 0).widget()
@@ -126,8 +128,6 @@ class Field:
         #                 new_w = self.find_ship(w)
         #                 if w.x == new_w.x and w.y == new_w.y:
         #                     break
-
-
 
         row = self.move.row
         col = self.move.column
@@ -154,9 +154,56 @@ class Field:
                 w = self.positions.itemAtPosition(x, y).widget()
                 w.if_checking_mode = True
 
-    #
-    # def generate_random_field(self):
-    #     pass
+    def generate_random_set(self):
+        count = 0
+        while True:
+            decks = randint(1, 4)
+            x = (decks * 30) % self.dim
+            y = (decks * 40) % self.dim
+            while 0 <= x <= self.dim and 0 <= y <= self.dim:
+                # print("Generated " + str(x) + " " + str(y) + " " + str(decks))
+
+                w = self.positions.itemAtPosition(x, y).widget()
+                if not w.is_ship and not w.is_anchor:
+                    print("YESSSSSSS")
+                    count += 1
+                    w.is_move = True
+                    w.update()
+                else:
+                    break
+                # decks -= 1
+                # count += 1
+                if count == decks:
+                    break
+                if decks % 2 == 0:
+                    x += 1
+                else:
+                    y += 1
+            if count > 0:
+                self.if_clicked()
+                break
+
+        # return
+
+        # while 0 <= x <= 9 and 0 <= y <= 9:
+        #     w = self.positions.itemAtPosition(x, y).widget()
+        #     if not w.is_ship and not w.is_anchor:
+        #         w.is_move = True
+        #         w.update()
+        #     else:
+        #         self.if_clicked()
+        #         print("YESSSSSSS")
+        #     # decks -= 1
+        #     # count += 1
+        #     if decks % 2 == 0:
+        #         x += 1
+        #     else:
+        #         y += 1
+
+
+        # self.put_anchors()
+        # time.sleep(10)
+
     #
     # def generate_user_field(self):
     #     while self.ship_factory.ships_1decks + self.ship_factory.ships_2decks + \
@@ -177,7 +224,7 @@ class Field:
     # def if_winner(self):
     #     pass
 
-        # for h in range(row - 1, end_row + 2):
-        #     for v in range(col - 1, end_col + 2):
-        #         if self.move.if_correct() and field[h][v] != 1:
-        #             field[h][v] = 2
+    # for h in range(row - 1, end_row + 2):
+    #     for v in range(col - 1, end_col + 2):
+    #         if self.move.if_correct() and field[h][v] != 1:
+    #             field[h][v] = 2
